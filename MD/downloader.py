@@ -1,30 +1,6 @@
 import os
 import japanshin
-
-from re import match, split
-
-
-def unifyNumber(num):
-    return "%03d" % int(num)
-
-
-def unifyChapter(chap):
-    chapter = ""
-    for item in chap:
-        if not match('.*/.*', item):
-            item = unifyNumber(item)
-        else:
-            item = unifyNumber(split('/', item)[0]) + "." + split('/', item)[1]
-        chapter += item
-    return chapter
-
-
-def test_mkdir(path):
-    if not os.path.isdir(path):
-        print "create directory %s" % path
-        os.makedirs(path)
-    else:
-        print "%s exist" % path
+import tools
 
 
 def download_japanshin(manga, directory):
@@ -34,7 +10,7 @@ def download_japanshin(manga, directory):
 
     for chapitre in japanshin.parse_for_chap(mangaurl):
         workingdir = os.path.join(mangadir, chapitre[0])
-        test_mkdir(workingdir)
+        tools.test_mkdir(workingdir)
         for page in japanshin.parse_for_page(chapitre[1]):
             print "downloading page %s from %s" % (page[0],
                                     len(japanshin.parse_for_page(chapitre[1])))

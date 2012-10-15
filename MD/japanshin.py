@@ -1,6 +1,7 @@
 import urllib2
 import tools
-from re import match, compile, findall
+from time import sleep
+from re import compile, findall, sub
 from bs4 import BeautifulSoup
 
 
@@ -23,8 +24,9 @@ def get_url(url):
         response = opener.open(request)
     except urllib2.HTTPError, e:
         #Petite gestion des codes 4xx
-        if match('4..', e.code()):
-            print e.code()
+        print "error (%s) on : %s\n...try again" % (e.code, url)
+        sleep(5)
+        get_url(url)
 
     code = response.code
     # headers object
@@ -56,6 +58,6 @@ def parse_for_page(url):
 def parse_for_image(url):
     soup = BeautifulSoup(get_url(url)[2])
     link = soup.find_all(src=compile('/comics/'))
-    imgurl = link[0]['src']
+    imgurl = sub(' ', '%20', link[0]['src'])
     imgext = imgurl[len(imgurl) - 3:len(imgurl)]
     return imgext, get_url(imgurl)[2]
