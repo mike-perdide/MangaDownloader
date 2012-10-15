@@ -39,7 +39,8 @@ def parse_for_chap(url):
     #page = get_url(url)
     soup = BeautifulSoup(get_url(url)[2])
     for item in soup.find_all(href=compile("/read/.*/fr/")):
-        chap.append([tools.unifyChapter(findall('fr/[0-9]+/(.*)/', item['href'])), item['href']])
+        chap.append([tools.unifyChapter(findall('fr/[0-9]+/(.*)/',
+                                        item['href'])), item['href']])
     return chap
 
 
@@ -47,13 +48,14 @@ def parse_for_page(url):
     page = []
     soup = BeautifulSoup(get_url(url)[2])
     for item in soup.find_all(onclick=compile("changePage")):
-        page.append([tools.unifyNumber(findall('\d+', item.text)[0]), item['href']])
+        page.append([tools.unifyNumber(findall('\d+', item.text)[0]),
+                    item['href']])
     return page
 
 
 def parse_for_image(url):
     soup = BeautifulSoup(get_url(url)[2])
     link = soup.find_all(src=compile('/comics/'))
-    imgurl =  link[0]['src']
-    imgext = imgurl[len(imgurl)-3:len(imgurl)]
+    imgurl = link[0]['src']
+    imgext = imgurl[len(imgurl) - 3:len(imgurl)]
     return imgext, get_url(imgurl)[2]
