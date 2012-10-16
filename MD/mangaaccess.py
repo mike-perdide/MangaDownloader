@@ -24,6 +24,8 @@ def parse_for_page(url):
 def parse_for_image(url):
     soup = BeautifulSoup(tools.get_url(url)[2])
     link = soup.find_all(style=compile('cursor: pointer'))
+    if len(link) == 0:
+        link =  soup.find_all(src=compile('/manga/'))
     imgurl = sub(' ', '%20', link[0]['src'])
     imgext = imgurl[len(imgurl) - 3:len(imgurl)]
     return imgext, tools.get_url(imgurl)[2]
