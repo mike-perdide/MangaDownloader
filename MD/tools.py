@@ -6,8 +6,6 @@ from re import match, split
 
 
 def get_url(url, retry=0):
-    '''get_url accepts a URL string and return the server response code,
-       response headers, and contents of the file'''
     req_headers = {
         'User-Agent': 'Mozilla/5.0',
         'Referer': 'http://www.google.com',
@@ -46,10 +44,14 @@ def unifyNumber(num):
 def unifyChapter(chap):
     chapter = ""
     for item in chap:
-        if not match('.*/.*', item):
-            item = unifyNumber(item)
-        else:
+        #Si item = XX/XX
+        if match('.*/.*', item):
             item = unifyNumber(split('/', item)[0]) + "." + split('/', item)[1]
+        #Si item = XX.XX
+        elif match('.*[.].*', item):
+            item = unifyNumber(split('[.]', item)[0]) + "." + split('[.]', item)[1]
+        else:
+            item = unifyNumber(item)
         chapter += item
     return chapter
 
