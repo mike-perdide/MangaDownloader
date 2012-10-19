@@ -49,21 +49,17 @@ def unifyChapter(chap):
             item = unifyNumber(split('/', item)[0]) + "." + split('/', item)[1]
         #Si item = XX.XX
         elif match('.*[.].*', item):
-            item = unifyNumber(split('[.]', item)[0]) + "." + split('[.]', item)[1]
+            item = unifyNumber(split('[.]', item)[0]) + "." + split('[.]',
+                                                                    item)[1]
         else:
             item = unifyNumber(item)
         chapter += item
     return chapter
 
 
-def test_mkdir(path, force="n"):
+def test_mkdir(path):
     if not os.path.isdir(path):
         print "create directory %s" % path
         os.makedirs(path)
-        return "ok"
-    elif force == 'n':
-        print "%s already exist, skipping..." % path
-        return "skip"
     else:
-        print "%s already exist, but -f enabled, continue..." % path
-        return "ok"
+        print "%s already exist, skipping..." % path

@@ -9,7 +9,7 @@ def _usage(exitcode):
     usage: $0 -s SITE -m MANGA -d DIR
         -s : Download site (japanshin, mangaaccess)
         -m : manga to download
-        -d : destination directory 
+        -d : destination directory
              (The chapter and manga directory will be created)
         -f : force retriving
         -h : affiche cet aide
