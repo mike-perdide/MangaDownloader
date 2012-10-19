@@ -9,7 +9,7 @@ def _usage(exitcode):
     usage: $0 -s SITE -m MANGA -d DIR
         -s : Download site (japanshin, mangaaccess)
         -m : manga to download
-        -d : destination directory \
+        -d : destination directory 
              (The chapter and manga directory will be created)
         -f : force retriving
         -h : affiche cet aide
@@ -33,7 +33,7 @@ for o, a in opts:
         basedir = a
     elif o == '-f':
         force = "y"
-    elif o == '-y':
+    elif o == '-h':
         _usage('0')
 
 if site == "japanshin":
