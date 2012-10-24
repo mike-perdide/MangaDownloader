@@ -9,7 +9,7 @@ def download_japanshin(manga, directory, force="n"):
     mangaurl = baseurl + manga
     mangadir = os.path.join(directory, manga)
 
-    download("japanshin")
+    download(mangaurl, mangadir, japanshin)
 
 
 def download_mangaaccess(manga, directory, force="n"):
@@ -18,13 +18,13 @@ def download_mangaaccess(manga, directory, force="n"):
                                                  "?mature_confirm=1"
     mangadir = os.path.join(directory, manga)
 
-    download("mangaaccess")
+    download(mangaurl, mangadir, mangaaccess)
 
 
-def download(site):
-    for chapitre in "site".parse_for_chap(mangaurl):
+def download(mangaurl, mangadir, manga_website):
+    for chapitre in manga_website.parse_for_chap(mangaurl):
         workingdir = os.path.join(mangadir, chapitre[0])
-        listPages = "site".parse_for_page(chapitre[1])
+        listPages = manga_website.parse_for_page(chapitre[1])
         tools.test_mkdir(workingdir)
         if not len(os.listdir(workingdir)) == len(listPages):
             dirlist = os.listdir(workingdir)
@@ -39,7 +39,7 @@ def download(site):
                         page[0] + ".png" in dirlist):
                     print "downloading page %s from %s" % (page[0],
                                                            len(listPages))
-                    image = "site".parse_for_image(page[1])
+                    image = manga_website.parse_for_image(page[1])
                     imagename = os.path.join(workingdir,
                                              page[0] + "." + image[0])
                     realimg = open(imagename, 'wb')
